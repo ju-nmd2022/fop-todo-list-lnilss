@@ -1,0 +1,39 @@
+html,
+body {
+  margin: 0px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.content {
+  margin-top: 2em;
+  justify-items: center;
+}
+
+h1 {
+  text-align: left;
+}
+
+#addTaskButton {
+  background-color: lightgrey;
+  border-radius: 20px;
+  border: 1px solid lightgrey;
+  width: 3em;
+  height: 2em;
+}
+
+#enterText {
+  width: 15em;
+  height: 2em;
+  border: 1px solid lightgrey;
+  border-radius: 20px;
+}
+
+#taskList {
+  position: relative;
+  text-align: left;
+}
+
+#completedTasks {
+  margin-top: 20px;
+  text-decoration: line-through;
+}
