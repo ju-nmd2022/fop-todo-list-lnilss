@@ -14,12 +14,15 @@
     </header>
     <main class="container">
       <div class="content">
+        <!-- add actions -->
         <div id="text">
-          <input type="text" id="enterText" placeholder="  add new task" />
-          <button id="addTaskButton">+</button>
+          <input type="text" id="typeNewTask" placeholder="  add new task" />
+          <button onclick="addTask()" id="addTaskButton">+</button>
         </div>
+        <!-- list -->
         <div id="taskList">
         </div>
+        <!-- completed tasks -->
         <div>
           <h4>completed</h4>
           <div id="completedTasks">

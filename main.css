@@ -1,7 +1,7 @@
 html,
 body {
   margin: 0px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: sans-serif;
 }
 
 .content {
@@ -21,7 +21,7 @@ h1 {
   height: 2em;
 }
 
-#enterText {
+#typeNewTask {
   width: 15em;
   height: 2em;
   border: 1px solid lightgrey;
@@ -36,4 +36,12 @@ h1 {
 #completedTasks {
   margin-top: 20px;
   text-decoration: line-through;
+}
+
+#taskItem {
+
+}
+
+#button {
+    
 }
