@@ -1,56 +1,79 @@
-const typeNewTask = document.getElementById("typeNewText");
+const typeNewTask = document.getElementById("typeNewTask");
 const addTaskButtonElement = document.getElementById("addTaskButton");
 const completedTasksElement = document.getElementById("completedTasks");
 const taskElement = document.getElementById("taskList");
 
-let tasks = [];
+let tasks = []; //array for new added tasks
+let completedTasks = []; //array for completed tasks
 
+//function that adds tasks by clicking a button
+//in correspondance with HTML
 function addTask() {
   addTaskButtonElement.addEventListener("click", addTaskHandler);
 }
 
+// function that adds a new task
 function addTaskHandler() {
-    if (inputElement.value.length > 0) { //checks whether value is inputted in text field
-      const newTask = inputElement.value;
-      tasks.push(newTask); //adds newTask to tasks array
-  
-      const taskItemElement = document.createElement("div");
-      taskItemElement.classList.add("taskItem");
-      const taskNameElement = document.createElement("li");
-      taskNameElement.innerText = newTask;
-  
-      const completeButtonElement = document.createElement("button");
-      completeButtonElement.innerText = "✔️";
-      completeButtonElement.addEventListener("click", completeTaskHandler); //when button is clicked, event happens
-  
-      const deleteButtonElement = document.createElement("button");
-      deleteButtonElement.innerText = "❌";
-      deleteButtonElement.addEventListener("click", deleteTaskHandler);
-  
-      taskItemElement.appendChild(taskNameElement);
-      taskItemElement.appendChild(completeButtonElement);
-      taskItemElement.appendChild(deleteButtonElement);
-  
-      taskListElement.appendChild(taskItemElement);
-  
-      inputElement.value = ""; //sets value to empty string to clear text field
-    }
+  if (typeNewTask.value.length > 0) {
+    //checks whether value is inputted in text field
+    const newTask = typeNewTask.value;
+    tasks.push(newTask); //adds newTask to tasks array
+
+    const taskItemElement = document.createElement("div");
+    taskItemElement.classList.add("taskItem");
+    const taskNameElement = document.createElement("li");
+    taskNameElement.innerText = newTask;
+
+    const completeButtonElement = document.createElement("button");
+    completeButtonElement.innerText = "✔️";
+    completeButtonElement.addEventListener("click", completeTaskHandler); //when button is clicked, event happens
+
+    const deleteButtonElement = document.createElement("button");
+    deleteButtonElement.innerText = "❌";
+    deleteButtonElement.addEventListener("click", deleteTaskHandler);
+
+    taskItemElement.appendChild(taskNameElement);
+    taskItemElement.appendChild(completeButtonElement);
+    taskItemElement.appendChild(deleteButtonElement);
+
+    taskElement.appendChild(taskItemElement);
+
+    typeNewTask.value = ""; //sets value to empty string to clear text field
   }
-  
-  // function to complete a task
-  function completeTaskHandler() {
-    const taskName = taskItem.querySelector("li").innerText;
+}
+
+// function to complete a task
+function completeTaskHandler(event) {
+  const taskItem = event.target.parentNode;
+  const taskName = taskItem.querySelector("li").innerText;
+  const taskIndex = tasks.indexOf(taskName);
+  if (taskIndex > -1) {
+    //task already exists
+    tasks.splice(taskIndex, 1); //splices a single task from tasks array
+    completedTasks.push(taskName); // add completed task to completedTasks array
+    const completedTaskElement = document.createElement("li");
+    completedTaskElement.innerText = taskName;
+    completedTasksElement.appendChild(completedTaskElement);
+    taskItem.remove(); //removes the task item from the page
   }
-  
-  // function to delete a task
-  function deleteTaskHandler() { //event as argument
-    taskItem.remove();
-    updateTasks();
-  }
-  
-  // function to update the task list and completed task list
-  function updateTasks() {
-    completedTasksElement.innerHTML = "";
-  }
-  
-  addTask();
+}
+
+// function to delete a task
+function deleteTaskHandler() {
+  //event as argument
+  taskItem.remove();
+  updateTasks();
+}
+
+// function to update the task list and completed task list
+function updateTasks() {
+  completedTasksElement.innerHTML = "";
+  completedTasks.forEach((task) => { //clears the current HTML element content
+    //and loops it through the completedTasks array
+    const completedTaskElement = document.createElement("li");
+    completedTaskElement.innerText = task;
+    completedTasksElement.appendChild(completedTaskElement); //adds the new element
+  });
+}
+
+addTask();
