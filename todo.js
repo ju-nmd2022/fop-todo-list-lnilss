@@ -36,7 +36,7 @@ function addTaskHandler() {
     taskItemElement.appendChild(completeButtonElement);
     taskItemElement.appendChild(deleteButtonElement);
 
-    taskElement.appendChild(taskItemElement);
+    taskElement.appendChild(taskItemElement); //adds the individual task to the taskList
 
     typeNewTask.value = ""; //sets value to empty string to clear text field
   }
@@ -54,8 +54,15 @@ function completeTaskHandler(event) {
     completedTasks.push(taskName); // add completed task to completedTasks array
     const completedTaskElement = document.createElement("li");
     completedTaskElement.innerText = taskName;
+
+    const deleteButtonElement = document.createElement("button");
+    deleteButtonElement.innerText = "❌";
+    deleteButtonElement.addEventListener("click", deleteCompletedTaskHandler); //adds the new element
+
+    completedTaskElement.appendChild(deleteButtonElement);
     completedTasksElement.appendChild(completedTaskElement);
-    taskItem.remove(); //removes the task item from the page
+    taskItem.remove(); //removes the task item from the page (work in progress)
+    updateTasks();
   }
 }
 
@@ -67,9 +74,18 @@ function deleteTaskHandler(event) {
   //based on the taskName variable. lines 69-70 adapted from chatgpt
   //and i had a lot of trouble figuring out how to do this
   tasks = tasks.filter((task) => task !== taskName); //filter removes taskName from tasks array
-  completedTasks = completedTasks.filter((task) => task !== taskName); // remove task from completedTasks array (work in progress)
+  completedTasks = completedTasks.filter((task) => task !== taskName); // remove task from completedTasks array
   taskItem.remove();
   updateTasks();
+}
+
+//function to delete a task from completed task list
+function deleteCompletedTaskHandler(event) {
+    const taskItem = event.target.parentNode;
+    const taskName = taskItem.querySelector("li").innerText;
+    completedTasks = completedTasks.filter((task) => task !== taskName); // remove task from completedTasks array
+    taskItem.remove();
+    updateTasks();
 }
 
 // function to update the task list and completed task list
@@ -80,7 +96,13 @@ function updateTasks() {
     //and loops it through the completedTasks array
     const completedTaskElement = document.createElement("li");
     completedTaskElement.innerText = task;
-    completedTasksElement.appendChild(completedTaskElement); //adds the new element
+
+    const deleteButtonElement = document.createElement("button");
+    deleteButtonElement.innerText = "❌";
+    deleteButtonElement.addEventListener("click", deleteCompletedTaskHandler);//adds the new element
+
+    completedTaskElement.appendChild(deleteButtonElement);
+    completedTasksElement.appendChild(completedTaskElement);
   });
 }
 
