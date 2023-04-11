@@ -13,7 +13,8 @@ h1 {
   text-align: left;
 }
 
-#addTaskButton {
+#addTaskButton,
+button {
   background-color: lightgrey;
   border-radius: 20px;
   border: 1px solid lightgrey;
@@ -34,14 +35,17 @@ h1 {
 }
 
 #completedTasks {
-  margin-top: 20px;
+  margin-top: 0.5em;
   text-decoration: line-through;
 }
 
-#taskItem {
-
+.taskItem {
+  display: flex;
+  justify-content: flex-start;
 }
 
-#button {
-    
+.deleteButton {
+}
+
+.completeButton {
 }
