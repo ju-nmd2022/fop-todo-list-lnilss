@@ -1,10 +1,22 @@
+window.addEventListener("load", function () {
+  tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  completedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
+  updateTasks();
+});
+
 const typeNewTask = document.getElementById("typeNewTask");
 const addTaskButtonElement = document.getElementById("addTaskButton");
 const completedTasksElement = document.getElementById("completedTasks");
 const taskElement = document.getElementById("taskList");
 
-let tasks = []; //array for new added tasks
-let completedTasks = []; //array for completed tasks
+let tasks = JSON.parse(localStorage.getItem("tasks")) || []; //array for new added tasks - chatgpt suggestion
+let completedTasks = JSON.parse(localStorage.getItem("completedTasks")) || []; //array for completed tasks
+
+//function for localstorage
+function updateLocalStorage(tasks, completedTasks) {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
+  }
 
 //function that adds tasks by clicking a button
 //in correspondance with HTML
@@ -18,6 +30,8 @@ function addTaskHandler() {
     //checks whether value is inputted in text field
     const newTask = typeNewTask.value;
     tasks.push(newTask); //adds newTask to tasks array
+
+    updateLocalStorage(tasks, completedTasks);
 
     const taskItemElement = document.createElement("div");
     taskItemElement.classList.add("taskItem");
@@ -39,6 +53,7 @@ function addTaskHandler() {
     taskElement.appendChild(taskItemElement); //adds the individual task to the taskList
 
     typeNewTask.value = ""; //sets value to empty string to clear text field
+    updateTasks();
   }
 }
 
@@ -52,8 +67,12 @@ function completeTaskHandler(event) {
     //task already exists
     tasks.splice(taskIndex, 1); //splices a single task from tasks array
     completedTasks.push(taskName); // add completed task to completedTasks array
+
+    updateLocalStorage(tasks, completedTasks);
+
     const completedTaskElement = document.createElement("li");
     completedTaskElement.innerText = taskName;
+    completedTaskElement.dataset.taskName = taskName; //chatgpt suggested this solution
 
     const deleteButtonElement = document.createElement("button");
     deleteButtonElement.innerText = "❌";
@@ -68,6 +87,8 @@ function completeTaskHandler(event) {
 
 // function to delete a task
 function deleteTaskHandler(event) {
+  updateLocalStorage(tasks);
+
   const taskItem = event.target.parentNode; //becomes parent of button element
   const taskName = taskItem.querySelector("li").innerText;
   //strict inequality operator to determine if task should be removed
@@ -81,15 +102,21 @@ function deleteTaskHandler(event) {
 
 //function to delete a task from completed task list
 function deleteCompletedTaskHandler(event) {
-    const taskItem = event.target.parentNode;
-    const taskName = taskItem.querySelector("li").innerText;
-    completedTasks = completedTasks.filter((task) => task !== taskName); // remove task from completedTasks array
-    taskItem.remove();
-    updateTasks();
+  updateLocalStorage(tasks, completedTasks);
+
+  const taskItem = event.target.parentNode;
+  const taskName = taskItem.dataset.taskName;
+  completedTasks = completedTasks.filter((task) => task !== taskName); // remove task from completedTasks array
+  const completedTaskElement = taskItem.parentNode;
+  completedTaskElement.removeChild(taskItem);
+  taskItem.remove();
+  updateTasks();
 }
 
 // function to update the task list and completed task list
 function updateTasks() {
+  updateLocalStorage(tasks, completedTasks);
+
   completedTasksElement.innerHTML = "";
   completedTasks.forEach((task) => {
     //clears the current HTML element content
@@ -99,7 +126,7 @@ function updateTasks() {
 
     const deleteButtonElement = document.createElement("button");
     deleteButtonElement.innerText = "❌";
-    deleteButtonElement.addEventListener("click", deleteCompletedTaskHandler);//adds the new element
+    deleteButtonElement.addEventListener("click", deleteCompletedTaskHandler); //adds the new element
 
     completedTaskElement.appendChild(deleteButtonElement);
     completedTasksElement.appendChild(completedTaskElement);
@@ -107,3 +134,4 @@ function updateTasks() {
 }
 
 addTask();
+updateTasks();
