@@ -22,6 +22,7 @@ function updateLocalStorage(tasks, completedTasks) {
 //in correspondance with HTML
 function addTask() {
   addTaskButtonElement.addEventListener("click", addTaskHandler);
+  updateTasks();
 }
 
 // function that adds a new task
@@ -51,10 +52,11 @@ function addTaskHandler() {
     taskItemElement.appendChild(deleteButtonElement);
 
     taskElement.appendChild(taskItemElement); //adds the individual task to the taskList
+    console.log(taskItemElement);
 
     typeNewTask.value = ""; //sets value to empty string to clear text field
-    updateTasks();
   }
+  updateTasks();
 }
 
 // function to complete a task
@@ -81,8 +83,8 @@ function completeTaskHandler(event) {
     completedTaskElement.appendChild(deleteButtonElement);
     completedTasksElement.appendChild(completedTaskElement);
     taskItem.remove(); //removes the task item from the page (work in progress)
-    updateTasks();
   }
+  updateTasks();
 }
 
 // function to delete a task
@@ -116,6 +118,28 @@ function deleteCompletedTaskHandler(event) {
 // function to update the task list and completed task list
 function updateTasks() {
   updateLocalStorage(tasks, completedTasks);
+
+  taskElement.innerHTML = "";
+  tasks.forEach((task) => {
+    const taskItemElement = document.createElement("div");
+    taskItemElement.classList.add("taskItem");
+    const taskNameElement = document.createElement("li");
+    taskNameElement.innerText = task;
+
+    const completeButtonElement = document.createElement("button");
+    completeButtonElement.innerText = "✔️";
+    completeButtonElement.addEventListener("click", completeTaskHandler);
+
+    const deleteButtonElement = document.createElement("button");
+    deleteButtonElement.innerText = "❌";
+    deleteButtonElement.addEventListener("click", deleteTaskHandler);
+
+    taskItemElement.appendChild(taskNameElement);
+    taskItemElement.appendChild(completeButtonElement);
+    taskItemElement.appendChild(deleteButtonElement);
+
+    taskElement.appendChild(taskItemElement);
+  });
 
   completedTasksElement.innerHTML = "";
   completedTasks.forEach((task) => {
