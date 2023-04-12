@@ -4,29 +4,30 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>todolist</title>
+    <title>todo pal</title>
     <link rel="stylesheet" href="main.css" />
     <script src="todo.js" defer></script>
   </head>
   <body>
-    <header>
-      <h1>todolist</h1>
+    <header class="todo">
+      <h1>todo pal</h1>
     </header>
     <main class="container">
       <div class="content">
         <!-- add actions -->
-        <div id="text">
+        <div id="text" class="todo">
           <input type="text" id="typeNewTask" placeholder="  add new task" />
           <button onclick="addTask()" id="addTaskButton">➕</button>
         </div>
         <!-- list -->
-        <div id="taskList">
+        <div class="tobecompleted">
+          <h4>to be completed</h4>
+          <div id="taskList"></div>
         </div>
         <!-- completed tasks -->
-        <div>
+        <div class="completed">
           <h4>completed</h4>
-          <div id="completedTasks">
-          </div>
+          <div id="completedTasks"></div>
         </div>
       </div>
     </main>

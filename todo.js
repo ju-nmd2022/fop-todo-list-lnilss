@@ -14,9 +14,9 @@ let completedTasks = JSON.parse(localStorage.getItem("completedTasks")) || []; /
 
 //function for localstorage
 function updateLocalStorage(tasks, completedTasks) {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
-  }
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
+}
 
 //function that adds tasks by clicking a button
 //in correspondance with HTML

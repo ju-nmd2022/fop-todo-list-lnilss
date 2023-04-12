@@ -5,12 +5,19 @@ body {
 }
 
 .content {
+  display: grid;
+  grid-template-areas:
+    "todo todo"
+    "tobecompleted completed";
+  row-gap: 1em;
+  column-gap: 10em;
   margin-top: 2em;
   justify-items: center;
+  justify-content: center;
 }
 
 h1 {
-  text-align: left;
+  text-align: center;
 }
 
 #addTaskButton,
@@ -30,16 +37,33 @@ button {
 }
 
 #taskList {
+  margin-top: 1em;
   position: relative;
   text-align: left;
 }
 
 #completedTasks {
-  margin-top: 0.5em;
+  margin-top: 1em;
   text-decoration: line-through;
 }
 
 .taskItem {
   display: flex;
   justify-content: flex-start;
+}
+
+.taskItem, button {
+    margin-left: 0.5em;
+}
+
+.todo {
+  grid-area: todo;
+}
+
+.tobecompleted {
+  grid-area: tobecompleted;
+}
+
+.completed {
+  grid-area: completed;
 }
